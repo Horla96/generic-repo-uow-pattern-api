@@ -1,34 +1,9 @@
-# Visual Studio
-.vs/
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
-
-# Build results
 bin/
 obj/
-Debug/
-Release/
-
-# Rider IDE
-.idea/
-
-# ASP.NET Core
-appsettings*.json
 *.db
-
-# NuGet
-*.nupkg
-packages/
-.nuget/
-
-# Logs
 *.log
-
-# OS generated
-Thumbs.db
-Desktop.ini
-
-# Others
-*.swp
+*.pdb
+*.exe
+*.dll
+*.lock.json
+.vs/
