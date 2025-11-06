@@ -7,7 +7,7 @@ namespace generic_repo_pattern_api.Repository
     public class Repository<T> : IRepository<T> where T : class
     {
         protected readonly DbSet<T> _dbSet;
-        private readonly MyDbContext _myDbContext;
+        private MyDbContext _myDbContext;
 
 
         public Repository(MyDbContext myDbContext)
@@ -19,7 +19,7 @@ namespace generic_repo_pattern_api.Repository
         public async Task<T> AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
-            await  _myDbContext.SaveChangesAsync();
+            await _myDbContext.SaveChangesAsync();
             return entity;
         }
 
@@ -31,12 +31,17 @@ namespace generic_repo_pattern_api.Repository
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-           return await _dbSet.ToListAsync();
+            return await _dbSet.ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
-          return await _dbSet.FindAsync(id);
+            return await _dbSet.FindAsync(id);
+        }
+
+        public void SetDbContext(MyDbContext dbContext)
+        {
+            _myDbContext = dbContext;
         }
 
         public async Task UpdateAsync(T entity)
