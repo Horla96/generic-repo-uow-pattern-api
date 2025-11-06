@@ -37,11 +37,11 @@ namespace generic_repo_pattern_api.Controllers
             try
             {
                 await _unitOfWork.BeginTransactionAsync();
-               
+
                 var productEntity = new Product
                 {
                     Price = product.Price,
-                    ProductName = product.ProductName 
+                    ProductName = product.ProductName
                 };
                 var createdProduct = await _unitOfWork.GetRepository<Product>().AddAsync(productEntity);
                 await _unitOfWork.SaveChangesAsync();
