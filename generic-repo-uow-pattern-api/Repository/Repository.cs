@@ -52,13 +52,11 @@ namespace generic_repo_pattern_api.Repository
 
         public async Task<T> FindAsync(Expression<Func<T, bool>> match)
             => await _dbSet.SingleOrDefaultAsync(match);
-        
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();
         }
-
         public async Task<T> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
@@ -117,6 +115,18 @@ namespace generic_repo_pattern_api.Repository
             _myDbContext.Entry(entity).State = EntityState.Modified;
             await _myDbContext.SaveChangesAsync();
 
+        }
+        public async Task<IEnumerable<T>> GetAllAsync(ISpecification<T> specification = null)
+        {
+            return ApplySpecificationforList(specification);
+        }
+        public async Task<T> FindAsync(ISpecification<T> specification = null)
+        {
+            return await ApplySpecificationforList(specification).FirstOrDefaultAsync();
+        }
+        private IQueryable<T> ApplySpecificationforList(ISpecification<T> spec)
+        {
+            return SpecificationEvaluator<T>.GetQuery(_dbSet.AsQueryable(), spec);
         }
     }
 }
